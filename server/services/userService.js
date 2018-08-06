@@ -43,10 +43,10 @@ class userService {
                         })
                     }).catch((error) => {
                         console.log(error);
-                        const hasherror = {};
-                        hasherror.responseCode = '03';
-                        hasherror.responseMessage = 'Error Hashing Password';
-                        reject(error);
+                        const hashError = {};
+                        hashError.responseCode = '03';
+                        hashError.responseMessage = 'Error Hashing Password';
+                        reject(hashError);
                     });
                 }
             });
@@ -77,16 +77,69 @@ class userService {
                         data.token = token;
                         resolve(data);
                     }).catch((error) => {
-                        const errorpsswd = {};
-                        errorpsswd.responseCode = '01';
-                        errorpsswd.responseMessage = 'Wrong Username and Password Combination'
-                        reject(errorpsswd);
+                        const wrongPassword = {};
+                        wrongPassword.responseCode = '01';
+                        wrongPassword.responseMessage = 'Wrong Username and Password Combination'
+                        reject(wrongPassword);
                     });
                 } else {
                     const unknownUser = {};
                     unknownUser.responseCode = '03';
                     unknownUser.responseMessage = 'User does not exist. Please Signup'
                     reject(unknownUser);
+                }
+            });
+        });
+    }
+
+    /**
+     * find all members
+     * @staticmethod
+     * @param  {string} body - Request object
+     * @return {string} res
+     */
+    static getAllUsers() {
+        return new Promise((resolve, reject) => {
+            User.find(function (err, user) {
+                if (err) {
+                    const log = {};
+                    log.responseCode = '02';
+                    log.responseMessage = 'Error Fetching All Users';
+                    reject(log);
+                }
+                if (user) {
+                    resolve(user);
+                } else {
+                    const unknown = {};
+                    unknown.responseCode = '03';
+                    unknown.responseMessage = 'Could not fetch users '
+                    reject(unknown);
+                }
+            });
+        });
+    }
+    /**
+     * Count all members
+     * @staticmethod
+     * @param  {string} body - Request object
+     * @return {string} res
+     */
+    static countAllUsers() {
+        return new Promise((resolve, reject) => {
+            User.count(function (err, result) {
+                if (err) {
+                    const log = {};
+                    log.responseCode = '02';
+                    log.responseMessage = 'Error Counting All Users';
+                    reject(log);
+                }
+                if (result) {
+                    resolve(result);
+                } else {
+                    const unknown = {};
+                    unknown.responseCode = '03';
+                    unknown.responseMessage = 'Could not count users '
+                    reject(unknown);
                 }
             });
         });

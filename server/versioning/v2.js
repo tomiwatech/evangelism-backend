@@ -1,11 +1,15 @@
 
 import { Router } from 'express';
 import users from '../routes/evangelism/user';
+import members from '../routes/evangelism/member';
+import converts from '../routes/evangelism/convert';
 
 const api = Router();
 
 api.get('/', (req, res) => res.send({ ok: true, message: 'Management System', status: 'API version 2' }));
 api.use('/auth', users);
+api.use('/', members);
+api.use('/', converts);
 api.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');

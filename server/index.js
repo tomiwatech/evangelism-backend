@@ -9,8 +9,6 @@ import apiVersion2 from './versioning/v2';
 
 const PORT = process.env.PORT || 3000;
 
-console.log(config.mongoUri)
-
 const promise = mongoose.connect(config.mongoUri, { useMongoClient: true }, function (err) {
   if (err) {
     console.log('Could not connect to mongo db');
@@ -26,8 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(logger('dev'));
 
-// Remember to set this in your enviroment variables later
-// app.set('superSecret', 'helloword');
 // api versioning;
 app.use('/api/v1', apiVersion1);
 app.use('/api/v2', apiVersion2);

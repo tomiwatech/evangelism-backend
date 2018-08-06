@@ -49,6 +49,46 @@ class UserController {
       });
     })
   }
+  /**
+   * Creates a new user
+   * @staticmethod
+   * @param  {object} req - user object
+   * @param {object} res - Response object
+   * @return {json} res.json
+   */
+  static getAll(req, res) {
+    userService.getAllUsers().then((result) => {
+      console.log(result);
+      return res.status(200).json({
+        responseMessage: 'Successfully fetched all Users',
+        data: result
+      });
+    }).catch((err) => {
+      return res.status(400).json({
+        responseMessage: err.responseMessage,
+      });
+    });
+  }
+  /**
+ * Creates a new user
+ * @staticmethod
+ * @param  {object} req - user object
+ * @param {object} res - Response object
+ * @return {json} res.json
+ */
+  static countAll(req, res) {
+    userService.countAllUsers().then((result) => {
+      console.log(result);
+      return res.status(200).json({
+        responseMessage: 'Successfully counted all Users',
+        total: result
+      });
+    }).catch((err) => {
+      return res.status(400).json({
+        responseMessage: err.responseMessage,
+      });
+    });
+  }
 }
 
 export default UserController;
